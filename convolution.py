@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #Se importa librería numpy con alias np
 import numpy as np              
 #Se importa pyplot de la librería matplotlib con alias plt
@@ -28,18 +27,24 @@ def convolution(image, kernel):
 
     #Se crea una matriz (con las dimensiones de image) donde se almacenará el resultado y se llena con ceros 
     output = np.zeros(image.shape)
+
+    #Se crea el pad para la iamgen final
+    pad_height = int((kernel_row - 1) / 2)
+    pad_width = int((kernel_col - 1) / 2)
+    padded_image = np.zeros((image_row + (2 * pad_height), image_col + (2 * pad_width)))
+    padded_image[pad_height:padded_image.shape[0] - pad_height, pad_width:padded_image.shape[1] - pad_width] = image
+
     #Cada índice de la matriz output va a ser igual a la suma de la multiplicación de
     #un pedazo o *fragmento* de image por la matriz filtro (kernel) 
     for row in range(image_row):
         for col in range(image_col):
-                output[row, col] = conv_aux(
-                                    image[row:row + kernel_row, 
-                                    col:col + kernel_col],kernel)
+                #Se obtiene la imagen final (sumatoria de multiplicación de imagen por kernel) y  se agrega al padding
+                output[row, col] = np.sum(kernel * padded_image[row:row + kernel_row, col:col + kernel_col])
 
     #Se crea una gráfica con la matriz output         
     plt.imshow(output, cmap='hot')
     #Se asigna un título a la gráfica
-    plt.title("Output Image using {}X{} Kernel".format(kernel_row, kernel_col))
+    plt.title("Output Image using {}X{} Kernel (with a padding of 1)".format(kernel_row, kernel_col))
     #Se muestra la gráfica
     plt.show()
  
@@ -51,15 +56,3 @@ filter_mat = np.array([[1,1,1],[0,0,0],[2,10,3]])
 
 #Se ejecuta la función convolución con las matrices declaradas anteriormente
 convolution(orig_mat,filter_mat)
-=======
-import numpy as np
-
-orig_mat = np.array([[1, 2, 3], [7, 8, 9], [0,0,1]])
-filter_mat = np.array([[1,1,1],[0,0,0],[2,10,3]])
-conv_mat = np.array([[0,0,0],[0,0,0],[0,0,0]])
-res = 0
-for i in range(3):
-  for j in range(3):
-    res = res + (orig_mat[i,j] * filter_mat[i,j])
-print(res)
->>>>>>> df727358b48765170664480df244cb42a7962cfb
