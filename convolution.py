@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Se importa librería numpy con alias np
 import numpy as np              
 #Se importa pyplot de la librería matplotlib con alias plt
@@ -50,3 +51,15 @@ filter_mat = np.array([[1,1,1],[0,0,0],[2,10,3]])
 
 #Se ejecuta la función convolución con las matrices declaradas anteriormente
 convolution(orig_mat,filter_mat)
+=======
+import numpy as np
+
+orig_mat = np.array([[1, 2, 3], [7, 8, 9], [0,0,1]])
+filter_mat = np.array([[1,1,1],[0,0,0],[2,10,3]])
+conv_mat = np.array([[0,0,0],[0,0,0],[0,0,0]])
+res = 0
+for i in range(3):
+  for j in range(3):
+    res = res + (orig_mat[i,j] * filter_mat[i,j])
+print(res)
+>>>>>>> df727358b48765170664480df244cb42a7962cfb
